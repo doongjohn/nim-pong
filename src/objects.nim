@@ -84,14 +84,12 @@ proc playerCollision(this: var Ball, deltaTime: float) =
     if checkYOverlap(this, player1):
       this.speed = this.defaultSpeed
       this.dir = (this.pos - player1.pos).normalize()
-      # clamp position
       this.pos.x = player1.pos.x - this.size.x / 2
 
   if this.dir.x < 0 and isOverlapXPlayer2:
     if checkYOverlap(this, player2):
       this.speed = this.defaultSpeed
       this.dir = (this.pos - player2.pos).normalize()
-      # clamp position
       this.pos.x = player2.pos.x + this.size.x / 2
 
 
