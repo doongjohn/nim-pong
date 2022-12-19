@@ -1,6 +1,7 @@
 import
   windy,
   boxy,
+  extraboxy,
   extramath
 
 
@@ -25,6 +26,9 @@ var
   player1*: Player
   player2*: Player
   ball*: Ball
+
+  player1Score = 0
+  player2Score = 0
 
 
 proc init*(_: typedesc[Player], center: Vec2, offsetX: float, keyUp, keyDown: Button): Player =
@@ -105,11 +109,13 @@ proc move(this: var Ball, window: Window, deltaTime: float) =
     this.dir = this.dir.reflect(vec2(0, 1))
 
   if this.pos.x < this.size.x / 2:
-    # TODO: update score
+    # update score
+    inc player1Score
     this.dir = this.dir.reflect(vec2(1, 0))
 
   if this.pos.x > window.size.vec2.x - this.size.x / 2:
-    # TODO: update score
+    # update score
+    inc player2Score
     this.dir = this.dir.reflect(vec2(-1, 0))
 
   # clamp position
@@ -128,3 +134,24 @@ proc draw*(this: Ball, bxy: Boxy) =
   bxy.translate(-this.size / 2)
   bxy.drawRect(rect(vec2(0, 0), this.size), color(1, 1, 1, 1))
   bxy.restoreTransform()
+
+
+proc drawScore*(window: Window, bxy: Boxy) =
+  bxy.drawText(
+    "P1 score",
+    translate((window.size.vec2 / 2) + vec2(30, -150)),
+    $player1Score,
+    consolas,
+    30,
+    static parseHex("ffffff"),
+    LeftAlign
+  )
+  bxy.drawText(
+    "P2 score",
+    translate((window.size.vec2 / 2) + vec2(-30, -150)),
+    $player2Score,
+    consolas,
+    30,
+    static parseHex("ffffff"),
+    RightAlign
+  )

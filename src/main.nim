@@ -25,7 +25,7 @@ proc main() =
 
   player1 = Player.init(center, 280, KeyUp, KeyDown)
   player2 = Player.init(center, -280, KeyW, KeyS)
-  ball = Ball.init(center, vec2(-1, 1))
+  ball = Ball.init(center, vec2(-1, 0))
 
   var frameStartTime = getMonoTime()
   var deltaTime: float
@@ -49,6 +49,9 @@ proc main() =
     player1.draw(bxy, player1.size.x / 2)
     player2.draw(bxy, -player2.size.x / 2)
     ball.draw(bxy)
+
+    # draw score text
+    drawScore(window, bxy)
 
     bxy.endFrame()
     window.swapBuffers()
