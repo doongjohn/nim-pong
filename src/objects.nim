@@ -1,7 +1,6 @@
 import
   windy,
-  boxy,
-  extraboxy
+  boxy
 
 
 type
