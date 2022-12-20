@@ -4,6 +4,7 @@ import
   opengl,
   windy,
   boxy,
+  game,
   objects
 
 

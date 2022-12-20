@@ -1,6 +1,7 @@
 import
   windy,
   boxy,
+  ../game,
   ../extramath,
   ../objects
 
@@ -9,7 +10,7 @@ proc init*(_: typedesc[Ball], pos: Vec2, dir: Vec2): Ball =
   result = Ball()
   result.size = vec2(10, 10)
   result.pos = pos
-  result.minSpeed = 200'f
+  result.minSpeed = 250'f
   result.maxSpeed = 400'f
   result.accel = 20'f
   result.speed = 200'f
