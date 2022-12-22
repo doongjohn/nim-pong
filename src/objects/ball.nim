@@ -11,19 +11,19 @@ proc init*(_: typedesc[Ball], pos: Vec2, dir: Vec2): Ball =
   result.size = vec2(10, 10)
   result.pos = pos
   result.minSpeed = 250'f
-  result.maxSpeed = 400'f
+  result.maxSpeed = 420'f
   result.accel = 20'f
   result.speed = 200'f
   result.dir = dir.normalize()
 
 
 proc playerCollision(this: var Ball, deltaTime: float) =
-  func checkYOverlap(this: Ball, player: Player): bool =
-    let top = this.pos.y - this.size.y / 2
-    let bot = this.pos.y + this.size.y / 2
-    result =
-      (top >= player.pos.y - player.size.y / 2 and top <= player.pos.y + player.size.y / 2) or
-      (bot >= player.pos.y - player.size.y / 2 and bot <= player.pos.y + player.size.y / 2)
+  let top = this.pos.y - this.size.y / 2
+  let bot = this.pos.y + this.size.y / 2
+
+  template checkYOverlap(this: Ball, player: Player): bool =
+    (top >= player.pos.y - player.size.y / 2 and top <= player.pos.y + player.size.y / 2) or
+    (bot >= player.pos.y - player.size.y / 2 and bot <= player.pos.y + player.size.y / 2)
 
   let nextX = this.pos.x + this.dir.x * this.speed * deltaTime
   let isOverlapXPlayer1 = this.pos.x + this.size.x / 2 <= player1.pos.x and nextX + this.size.x / 2 >= player1.pos.x
@@ -43,23 +43,26 @@ proc playerCollision(this: var Ball, deltaTime: float) =
 
 
 proc move(this: var Ball, window: Window, deltaTime: float) =
+  # update position
   this.pos += this.dir * (this.speed * deltaTime)
 
+  # hit top wall
   if this.pos.y < this.size.y / 2:
     this.speed = min(this.speed + this.accel, this.maxSpeed)
     this.dir = this.dir.reflect(vec2(0, -1))
 
+  # hit bottom wall
   if this.pos.y > window.size.vec2.y - this.size.y / 2:
     this.speed = min(this.speed + this.accel, this.maxSpeed)
     this.dir = this.dir.reflect(vec2(0, 1))
 
+  # hit left wall
   if this.pos.x < this.size.x / 2:
-    # update score
     inc player1Score
     this.dir = this.dir.reflect(vec2(1, 0))
 
+  # hit right wall
   if this.pos.x > window.size.vec2.x - this.size.x / 2:
-    # update score
     inc player2Score
     this.dir = this.dir.reflect(vec2(-1, 0))
 

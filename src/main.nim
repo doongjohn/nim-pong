@@ -53,6 +53,7 @@ proc main() =
 
     # draw score text
     drawScore(window, bxy)
+    drawFps(window, bxy, deltaTime)
 
     bxy.endFrame()
     window.swapBuffers()
