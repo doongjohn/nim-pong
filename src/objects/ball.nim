@@ -1,6 +1,7 @@
 import
   windy,
   boxy,
+
   ../game,
   ../extramath,
   ../objects
@@ -31,13 +32,13 @@ proc playerCollision(this: var Ball, deltaTime: float) =
 
   if this.dir.x > 0 and isOverlapXPlayer1:
     if checkYOverlap(this, player1):
-      this.speed = this.minSpeed
+      this.speed = min(this.speed + this.accel, this.maxSpeed)
       this.dir = (this.pos - player1.pos).normalize()
       this.pos.x = player1.pos.x - this.size.x / 2
 
   if this.dir.x < 0 and isOverlapXPlayer2:
     if checkYOverlap(this, player2):
-      this.speed = this.minSpeed
+      this.speed = min(this.speed + this.accel, this.maxSpeed)
       this.dir = (this.pos - player2.pos).normalize()
       this.pos.x = player2.pos.x + this.size.x / 2
 
@@ -59,11 +60,13 @@ proc move(this: var Ball, window: Window, deltaTime: float) =
   # hit left wall
   if this.pos.x < this.size.x / 2:
     inc player1Score
+    this.speed = this.minSpeed
     this.dir = this.dir.reflect(vec2(1, 0))
 
   # hit right wall
   if this.pos.x > window.size.vec2.x - this.size.x / 2:
     inc player2Score
+    this.speed = this.minSpeed
     this.dir = this.dir.reflect(vec2(-1, 0))
 
   # clamp position

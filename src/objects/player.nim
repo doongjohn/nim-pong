@@ -1,6 +1,7 @@
 import
   windy,
   boxy,
+
   ../objects
 
 
@@ -8,7 +9,7 @@ proc init*(_: typedesc[Player], center: Vec2, offsetX: float, keyUp, keyDown: Bu
   result = Player()
   result.size = vec2(10, 80)
   result.pos = vec2(center.x + offsetX, center.y)
-  result.speed = 220'f
+  result.speed = 240'f
   result.keyUp = keyUp
   result.keyDown = keyDown
 

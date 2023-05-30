@@ -1,20 +1,26 @@
 import
   std/times,
   std/monotimes,
+
+  # packages
   opengl,
   windy,
   boxy,
+
+  # modules
   game,
   objects
 
 
 proc main() =
+  # create a window
   let window = newWindow(
     title = "Pong",
     size = ivec2(640, 360),
     vsync = true,
     msaa = msaa4x,
   )
+
   # disable window resize
   window.style = Decorated
 
@@ -34,7 +40,7 @@ proc main() =
   window.onFrame = proc() =
     # calculate delta time
     let currentTime = getMonoTime()
-    deltaTime = (currentTime - frameStartTime).inMilliseconds.toFloat / 1000'f
+    deltaTime = (currentTime - frameStartTime).inMilliseconds.float / 1000'f
     frameStartTime = currentTime
 
     # clear screen

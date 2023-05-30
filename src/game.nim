@@ -1,6 +1,7 @@
 import
   windy,
   boxy,
+
   extraboxy
 
 
@@ -13,7 +14,7 @@ proc drawFps*(window: Window, bxy: Boxy, deltaTime: float) =
   bxy.drawText(
     "FPS",
     translate(vec2(10, 10)),
-    "FPS " & $(1 / deltaTime).int,
+    "FPS " & $int(1 / deltaTime),
     consolas,
     16,
     static parseHex("ffffff"),
