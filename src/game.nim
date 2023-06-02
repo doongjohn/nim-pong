@@ -15,8 +15,7 @@ proc drawFps*(window: Window, bxy: Boxy, deltaTime: float) =
     "FPS",
     translate(vec2(10, 10)),
     "FPS " & $int(1 / deltaTime),
-    consolas,
-    16,
+    consolas, 16,
     static parseHex("ffffff"),
     LeftAlign
   )
@@ -27,8 +26,7 @@ proc drawScore*(window: Window, bxy: Boxy) =
     "P1 score",
     translate((window.size.vec2 / 2) + vec2(40, -150)),
     $player1Score,
-    consolas,
-    30,
+    consolas, 30,
     static parseHex("ffffff"),
     LeftAlign
   )
@@ -36,8 +34,7 @@ proc drawScore*(window: Window, bxy: Boxy) =
     "P2 score",
     translate((window.size.vec2 / 2) + vec2(-40, -150)),
     $player2Score,
-    consolas,
-    30,
+    consolas, 30,
     static parseHex("ffffff"),
     RightAlign
   )

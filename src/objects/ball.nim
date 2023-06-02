@@ -8,14 +8,15 @@ import
 
 
 proc init*(_: typedesc[Ball], pos: Vec2, dir: Vec2): Ball =
-  result = Ball()
-  result.size = vec2(10, 10)
-  result.pos = pos
-  result.minSpeed = 250'f
-  result.maxSpeed = 420'f
-  result.accel = 20'f
-  result.speed = 200'f
-  result.dir = dir.normalize()
+  Ball(
+    size: vec2(10, 10),
+    pos: pos,
+    minSpeed: 250'f,
+    maxSpeed: 420'f,
+    accel: 20'f,
+    speed: 200'f,
+    dir: dir.normalize(),
+  )
 
 
 proc playerCollision(this: var Ball, deltaTime: float) =

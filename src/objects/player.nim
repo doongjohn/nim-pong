@@ -6,12 +6,13 @@ import
 
 
 proc init*(_: typedesc[Player], center: Vec2, offsetX: float, keyUp, keyDown: Button): Player =
-  result = Player()
-  result.size = vec2(10, 80)
-  result.pos = vec2(center.x + offsetX, center.y)
-  result.speed = 240'f
-  result.keyUp = keyUp
-  result.keyDown = keyDown
+  Player(
+    size: vec2(10, 80),
+    pos: vec2(center.x + offsetX, center.y),
+    speed: 240'f,
+    keyUp: keyUp,
+    keyDown: keyDown,
+  )
 
 
 proc move(this: var Player, window: Window, deltaTime: float) =
