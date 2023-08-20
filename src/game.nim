@@ -1,6 +1,6 @@
 import
-  windy,
-  boxy,
+  pkg/windy,
+  pkg/boxy,
 
   extraboxy
 

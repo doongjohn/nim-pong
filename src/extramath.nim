@@ -1,4 +1,5 @@
-import vmath
+import
+  pkg/vmath
 
 
 func reflect*(vec, normal: Vec2): Vec2 =

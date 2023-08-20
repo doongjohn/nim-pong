@@ -2,12 +2,10 @@ import
   std/times,
   std/monotimes,
 
-  # packages
-  opengl,
-  windy,
-  boxy,
+  pkg/opengl,
+  pkg/windy,
+  pkg/boxy,
 
-  # modules
   game,
   objects
 
@@ -24,20 +22,26 @@ proc main() =
   # disable window resize
   window.style = Decorated
 
-  makeContextCurrent(window)
+  window.makeContextCurrent()
   loadExtensions()
 
-  let bxy = newBoxy()
-  let center = window.size.vec2 / 2
+  let
+    bxy = newBoxy()
+    center = window.size.vec2 / 2
 
   player1 = Player.init(center, 280, KeyUp, KeyDown)
   player2 = Player.init(center, -280, KeyW, KeyS)
   ball = Ball.init(center, vec2(-1, 0))
 
-  var frameStartTime = getMonoTime()
-  var deltaTime: float
+  var
+    frameStartTime = getMonoTime()
+    deltaTime: float
 
   window.onFrame = proc() =
+    # press escapre to exit
+    if window.buttonDown[KeyEscape]:
+      window.closeRequested = true
+
     # calculate delta time
     let currentTime = getMonoTime()
     deltaTime = (currentTime - frameStartTime).inMilliseconds.float / 1000'f
@@ -65,7 +69,7 @@ proc main() =
     window.swapBuffers()
 
   # start event loop
-  while not window.closeRequested:
+  while not window.closeRequested():
     pollEvents()
 
 

@@ -1,5 +1,5 @@
 import
-  boxy
+  pkg/boxy
 
 
 let consolas* = readTypeface("C:\\Windows\\Fonts\\consola.ttf")
