@@ -20,16 +20,21 @@ proc init*(_: typedesc[Ball], pos: Vec2, dir: Vec2): Ball =
 
 
 proc playerCollision(this: var Ball, deltaTime: float) =
-  let top = this.pos.y - this.size.y / 2
-  let bot = this.pos.y + this.size.y / 2
+  let
+    top = this.pos.y - this.size.y / 2
+    bot = this.pos.y + this.size.y / 2
+
+  let
+    nextX = this.pos.x + this.dir.x * this.speed * deltaTime
+    isOverlapXPlayer1 = this.pos.x + this.size.x / 2 <= player1.pos.x and nextX + this.size.x / 2 >= player1.pos.x
+    isOverlapXPlayer2 = this.pos.x - this.size.x / 2 >= player2.pos.x and nextX - this.size.x / 2 <= player2.pos.x
 
   template checkYOverlap(this: Ball, player: Player): bool =
-    (top >= player.pos.y - player.size.y / 2 and top <= player.pos.y + player.size.y / 2) or
-    (bot >= player.pos.y - player.size.y / 2 and bot <= player.pos.y + player.size.y / 2)
-
-  let nextX = this.pos.x + this.dir.x * this.speed * deltaTime
-  let isOverlapXPlayer1 = this.pos.x + this.size.x / 2 <= player1.pos.x and nextX + this.size.x / 2 >= player1.pos.x
-  let isOverlapXPlayer2 = this.pos.x - this.size.x / 2 >= player2.pos.x and nextX - this.size.x / 2 <= player2.pos.x
+    let
+      playerTop = player.pos.y - player.size.y / 2
+      playerBot = player.pos.y + player.size.y / 2
+    (top >= playerTop and top <= playerBot) or
+    (bot >= playerTop and bot <= playerBot)
 
   if this.dir.x > 0 and isOverlapXPlayer1:
     if checkYOverlap(this, player1):
