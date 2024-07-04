@@ -37,14 +37,14 @@ proc main() =
     frameStartTime = getMonoTime()
     deltaTime: float
 
-  window.onFrame = proc() =
+  while not window.closeRequested():
     # press escapre to exit
     if window.buttonDown[KeyEscape]:
       window.closeRequested = true
 
     # calculate delta time
     let currentTime = getMonoTime()
-    deltaTime = (currentTime - frameStartTime).inMilliseconds.float / 1000'f
+    deltaTime = (currentTime - frameStartTime).inMilliseconds.float / 1000.0
     frameStartTime = currentTime
 
     # clear screen
@@ -61,15 +61,12 @@ proc main() =
     player2.draw(bxy, -player2.size.x / 2)
     ball.draw(bxy)
 
-    # draw score text
+    # draw UI
     drawScore(window, bxy)
     drawFps(window, bxy, deltaTime)
 
     bxy.endFrame()
     window.swapBuffers()
-
-  # start event loop
-  while not window.closeRequested():
     pollEvents()
 
 

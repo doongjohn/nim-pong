@@ -29,7 +29,7 @@ proc playerCollision(this: var Ball, deltaTime: float) =
     isOverlapXPlayer1 = this.pos.x + this.size.x / 2 <= player1.pos.x and nextX + this.size.x / 2 >= player1.pos.x
     isOverlapXPlayer2 = this.pos.x - this.size.x / 2 >= player2.pos.x and nextX - this.size.x / 2 <= player2.pos.x
 
-  template checkYOverlap(this: Ball, player: Player): bool =
+  template isOverlapY(this: Ball, player: Player): bool =
     let
       playerTop = player.pos.y - player.size.y / 2
       playerBot = player.pos.y + player.size.y / 2
@@ -37,13 +37,13 @@ proc playerCollision(this: var Ball, deltaTime: float) =
     (bot >= playerTop and bot <= playerBot)
 
   if this.dir.x > 0 and isOverlapXPlayer1:
-    if checkYOverlap(this, player1):
+    if this.isOverlapY(player1):
       this.speed = min(this.speed + this.accel, this.maxSpeed)
       this.dir = (this.pos - player1.pos).normalize()
       this.pos.x = player1.pos.x - this.size.x / 2
 
   if this.dir.x < 0 and isOverlapXPlayer2:
-    if checkYOverlap(this, player2):
+    if this.isOverlapY(player2):
       this.speed = min(this.speed + this.accel, this.maxSpeed)
       this.dir = (this.pos - player2.pos).normalize()
       this.pos.x = player2.pos.x + this.size.x / 2
