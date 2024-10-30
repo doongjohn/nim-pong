@@ -1,9 +1,6 @@
-import
-  pkg/boxy
-
+import pkg/boxy
 
 let consolas* = readTypeface("C:\\Windows\\Fonts\\consola.ttf")
-
 
 proc drawText*(
   bxy: Boxy,

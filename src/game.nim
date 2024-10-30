@@ -1,14 +1,10 @@
-import
-  pkg/windy,
-  pkg/boxy,
-
-  extraboxy
-
+import pkg/windy
+import pkg/boxy
+import extraboxy
 
 var
   player1Score* = 0
   player2Score* = 0
-
 
 proc drawFps*(window: Window, bxy: Boxy, deltaTime: float) =
   bxy.drawText(
@@ -19,7 +15,6 @@ proc drawFps*(window: Window, bxy: Boxy, deltaTime: float) =
     static parseHex("ffffff"),
     LeftAlign
   )
-
 
 proc drawScore*(window: Window, bxy: Boxy) =
   bxy.drawText(

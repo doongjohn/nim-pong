@@ -1,7 +1,5 @@
-import
-  pkg/windy,
-  pkg/boxy
-
+import pkg/windy
+import pkg/boxy
 
 type
   Player* = object
@@ -20,18 +18,13 @@ type
     speed*: float
     dir*: Vec2
 
-
 var
   player1*: Player
   player2*: Player
   ball*: Ball
 
-
-import
-  objects/player,
-  objects/ball as ballmodule
-
-
-export
-  player,
-  ballmodule
+# not needed if using experimental:typeBoundOps
+import objects/player
+import objects/ball as ballmodule
+export player
+export ballmodule
