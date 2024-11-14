@@ -5,43 +5,43 @@ import game
 import objects
 
 proc main() =
-  var app = initApp()
+  var a = initApp()
   var fpsTimer = 0.0
   var fpsValue = 0.0
   var fpsCount = 0
 
   # init objects
-  player1 = Player.init(app.window.center + vec2(280, 0), KeyUp, KeyDown)
-  player2 = Player.init(app.window.center - vec2(280, 0), KeyW, KeyS)
-  ball = Ball.init(app.window.center, vec2(-1, 0))
+  player1 = Player.init(a.window.center + vec2(280, 0), KeyUp, KeyDown)
+  player2 = Player.init(a.window.center - vec2(280, 0), KeyW, KeyS)
+  ball = Ball.init(a.window.center, vec2(-1, 0))
 
-  app.gameLoop:
-    app.fixedUpdate:
+  a.gameLoop:
+    a.fixedUpdate:
       # press escape to exit
-      if app.window.buttonDown[KeyEscape]:
-        app.window.closeRequested = true
+      if a.window.buttonDown[KeyEscape]:
+        a.window.closeRequested = true
 
       # update objects
-      player1.update(app.window, app.fixedDeltaTime)
-      player2.update(app.window, app.fixedDeltaTime)
-      ball.update(app.window, app.fixedDeltaTime)
+      player1.update(a.window, app.fixedDeltaTime)
+      player2.update(a.window, app.fixedDeltaTime)
+      ball.update(a.window, app.fixedDeltaTime)
 
-    app.render:
+    a.render:
       # draw objects
-      player1.draw(app.bxy, player1.size.x / 2)
-      player2.draw(app.bxy, -player2.size.x / 2)
-      ball.draw(app.bxy)
+      player1.draw(a.bxy, player1.size.x / 2)
+      player2.draw(a.bxy, -player2.size.x / 2)
+      ball.draw(a.bxy)
 
       # draw UI
-      drawScore(app.window, app.bxy)
+      drawScore(a.window, a.bxy)
 
       # draw FPS
-      fpsTimer += app.deltaTime
+      fpsTimer += a.deltaTime
       fpsCount += 1
       if fpsTimer >= 0.5:
         fpsValue = fpsTimer / fpsCount.float
         fpsTimer = 0
         fpsCount = 0
-      drawFps(app.window, app.bxy, fpsValue)
+      drawFps(a.window, a.bxy, fpsValue)
 
 main()

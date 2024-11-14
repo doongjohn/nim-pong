@@ -4,16 +4,16 @@ import pkg/opengl
 import pkg/windy
 import pkg/boxy
 
+const fixedDeltaTime*: float = 0.01
+
 type App* = object
   window*: Window
   bxy*: Boxy
-
-  fixedDeltaTime* = 0.01
-  deltaTime* = 0.0
-  accumulator* = 0.0
-  elapsedTime* = 0.0
   frameStartTime*: MonoTime
   timeDiff*: Duration
+  deltaTime*: float
+  accumulator*: float
+  elapsedTime*: float
 
 proc initApp*(): App =
   # create a window
@@ -33,10 +33,10 @@ proc initApp*(): App =
 
   return App(window: window, bxy: newBoxy())
 
-template center*(window: Window): auto =
+template center*(window: Window): Vec2 =
   window.size.vec2 / 2
 
-template calculateDeltaTime*(app: App) =
+template calculateDeltaTime*(app: var App) =
   let currentTime = getMonoTime()
   app.timeDiff += currentTime - app.frameStartTime
   app.frameStartTime = currentTime
@@ -47,20 +47,20 @@ template calculateDeltaTime*(app: App) =
   let frameTime = if app.deltaTime > 0.25: 0.25 else: app.deltaTime
   app.accumulator += frameTime
 
-template gameLoop*(app: App, body: untyped): untyped =
+template gameLoop*(app: var App, body: untyped): untyped =
   app.frameStartTime = getMonoTime()
   while not app.window.closeRequested():
     pollEvents()
     app.calculateDeltaTime()
     body
 
-template fixedUpdate*(app: App, body: untyped): untyped =
-  while app.accumulator >= app.fixedDeltaTime:
-    app.elapsedTime += app.fixedDeltaTime
-    app.accumulator -= app.fixedDeltaTime
+template fixedUpdate*(app: var App, body: untyped): untyped =
+  while app.accumulator >= fixedDeltaTime:
+    app.elapsedTime += fixedDeltaTime
+    app.accumulator -= fixedDeltaTime
     body
 
-template render*(app: App, body: untyped): untyped =
+template render*(app: var App, body: untyped): untyped =
   app.bxy.beginFrame(app.window.size)
   app.bxy.drawRect(rect(vec2(0, 0), app.window.size.vec2), static parseHex("9038fc"))
   body
