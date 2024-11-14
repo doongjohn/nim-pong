@@ -16,12 +16,11 @@ proc main() =
   ball = Ball.init(a.window.center, vec2(-1, 0))
 
   a.gameLoop:
-    a.fixedUpdate:
-      # press escape to exit
-      if a.window.buttonDown[KeyEscape]:
-        a.window.closeRequested = true
+    # press escape to exit
+    if a.window.buttonDown[KeyEscape]:
+      a.window.closeRequested = true
 
-      # update objects
+    a.fixedUpdate:
       player1.update(a.window, app.fixedDeltaTime)
       player2.update(a.window, app.fixedDeltaTime)
       ball.update(a.window, app.fixedDeltaTime)
