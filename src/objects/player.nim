@@ -2,10 +2,10 @@ import pkg/windy
 import pkg/boxy
 import ../objects
 
-proc init*(_: typedesc[Player], center: Vec2, offsetX: float, keyUp, keyDown: Button): Player =
+proc init*(_: typedesc[Player], pos: Vec2, keyUp, keyDown: Button): Player =
   Player(
     size: vec2(10, 80),
-    pos: vec2(center.x + offsetX, center.y),
+    pos: pos,
     speed: 240'f,
     keyUp: keyUp,
     keyDown: keyDown,
